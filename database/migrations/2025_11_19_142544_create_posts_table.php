@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->integer('post_id');
-            $table->integer('owner_id');
+            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('owner_id');
             $table->string('text', 2000);
             $table->string('link');
             $table->json('attachments');

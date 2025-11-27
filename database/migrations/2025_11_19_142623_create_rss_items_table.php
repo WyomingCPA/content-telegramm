@@ -30,7 +30,7 @@ return new class extends Migration
         // migrations/****_**_**_******_create_category_post_table.php
         Schema::create('category_post', function (Blueprint $table) {
             $table->integer('category_id')->unsigned();
-            $table->integer('post_id')->unsigned();
+            $table->unsignedBigInteger('post_id')->unsigned();
             $table->primary(['category_id', 'post_id']);
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onUpdate('cascade')->onDelete('cascade');
