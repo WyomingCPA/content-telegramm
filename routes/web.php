@@ -11,6 +11,7 @@ use App\Http\Controllers\group\GroupController;
 use App\Http\Controllers\vk\VkController;
 use App\Http\Controllers\queue\VkController as QueueVkController;
 use App\Http\Controllers\queue\QueueController;
+use App\Http\Controllers\tumblr\TumblrController;
 
 Auth::routes();
 
@@ -41,7 +42,8 @@ Route::group(['prefix' => 'vk', 'middleware' => 'auth',], function () {
 });
 
 Route::group(['prefix' => 'tumblr', 'middleware' => 'auth',], function () {
-
+    Route::get('anime-photo-all', [TumblrController::class, 'animePhotoAll'])->name('tumblr.anime-photo-all');
+    Route::get('sexy-photo-all', [TumblrController::class, 'sexyPhotoAll'])->name('tumblr.sexy-photo-all');
 });
 
 Route::group(['prefix' => 'queue', 'middleware' => 'auth',], function () {

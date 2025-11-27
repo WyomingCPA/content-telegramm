@@ -350,11 +350,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Anime Photo',
-                    'url' => '#',
+                    'url' => 'tumblr/anime-photo-all',
                 ],
                 [
                     'text' => 'Sexy Photo',
-                    'url' => '#',
+                    'url' => 'tumblr/sexy-photo-all',
                 ],
 
             ],
