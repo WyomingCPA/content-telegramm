@@ -16,20 +16,14 @@ use App\Http\Controllers\tumblr\TumblrController;
 Auth::routes();
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
-
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+    return redirect('dashboard');
+});
 require __DIR__ . '/settings.php';
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth',], function () {
-    Route::get('', [DashboardController::class, 'index']);
+    Route::get('', [DashboardController::class, 'index'])->name('main');;
 });
+
 
 Route::group(['prefix' => 'vk', 'middleware' => 'auth',], function () {
     Route::get('anime-photo-all', [VkController::class, 'vkAnimeAll'])->name('vk.anime-photo-all');
