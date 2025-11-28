@@ -10,20 +10,19 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Views;
 
-
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Types\InputMedia\InputMediaPhoto;
 use \TelegramBot\Api\Types\InputMedia\ArrayOfInputMedia;
 use TelegramBot\Api\Types\InputMedia\InputMediaVideo;
 
-class QueueAnimePhotoTumblr extends Command
+class QueueSexyPhotoTumblr extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:queue-anime-photo-tumblr';
+    protected $signature = 'app:queue-sexy-photo-tumblr';
 
     /**
      * The console command description.
@@ -38,16 +37,22 @@ class QueueAnimePhotoTumblr extends Command
     public function handle()
     {
         //Сделать проверку запуска публикаций для телеграмм
-        $isStart = Group::where('slug', '=', 'anime')->first();
+        $isStart = Group::where('slug', '=', 'sexy')->first();
         if (!$isStart->is_start) {
             echo "Не публикуем";
             return Command::SUCCESS;
         }
 
+        //$count_view = Views::select('last_post_view')->where('groups_id', $isStart->id)->orderBy('id', 'desc')->first();
+        //if ($count_view->last_post_view < 50) {
+        //    echo "Не публикуем", str($count_view->last_post_view);
+        //    return Command::SUCCESS;
+        //}
+
         $user = User::select('id')->where('email', 'WyomingCPA@yandex.ru')->first();
         $favorite_ids = $user->queuesPost->pluck('id')->toArray();
         $objects = Post::where('is_publish', false)
-            ->where('owner_id', 313)
+            ->where('owner_id', 213)
             ->where('type', 'photo')
             ->where('network', 'tumblr')
             ->where('is_hidden', false)
@@ -72,13 +77,13 @@ class QueueAnimePhotoTumblr extends Command
             $messageText .= $post->text;
 
             if (!empty($messageText)) {
-                $chatId = '-1001771871700';
+                $chatId = '-1002366645779';
                 //$chatId = '-414528593';
                 $bot = new BotApi(env('TELEGRAM_TOKEN'));
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
 
                 $media = new ArrayOfInputMedia();
-                $messageText .= " #anime #art #tyan \n\n\n<a href='https://t.me/+ATd62K2jKB43YzIy'>Anime_Tyn_TG</a>";
+                $messageText = "#girl #body #fit \n\n\n<a href='https://t.me/+U0H_PQ6A29g0ZmVi'>Bikini Paradise</a>";
 
                 foreach ($list_img[1] as $item_image) {
                     $media->addItem(new InputMediaPhoto($item_image, $messageText, 'HTML'));
