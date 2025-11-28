@@ -17,6 +17,12 @@ Schedule::command('command:publish-sexy-queue')->everyTwoHours();
 
 //tumblr 
 Schedule::command('command:queue-anime-photo-tumblr')->everyThreeHours();
+
+//telegram
+Schedule::command('app:get-post-from-telegramm-sexy')->hourly();
+Schedule::command('app:get-post-from-telegramm-sexy-video')->hourly();
+Schedule::command('app:get-post-photo-anime')->hourly();
+
 //
 Schedule::command('command:check-is-file')->daily();
 
@@ -26,5 +32,3 @@ Schedule::command('app:create-anime-ads')->daily();
 //$schedule->command('command:create-advert-list-button')->daily();
 
 Schedule::command('app:delete-ads')->everyThreeHours();
-
-
