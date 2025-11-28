@@ -9,7 +9,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 //vk
-Schedule::command('command:get-vk-post')->hourly();
+Schedule::command('command:get-post-from-vk')->hourly();
 Schedule::command('command:delete-old-post')->everyTwoHours();
 Schedule::command('command:publish-anime-queue')->hourly();
 Schedule::command('command:publish-anime2-queue')->everyThreeHours();
