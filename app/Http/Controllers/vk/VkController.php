@@ -177,13 +177,12 @@ class VkController extends Controller
     }
     public function postHidden(Request $request)
     {
-        $rows = $request->post('selRows');
+        $rows = $request->ids;
         $select = [];
         foreach ($rows as $value) {
             $post = Post::findOrFail($value);
             $post->is_hidden = true;
             $post->save();
         }
-        return back()->with('success', 'Посты скрыты.');
     }
 }

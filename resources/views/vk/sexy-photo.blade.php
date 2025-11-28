@@ -125,6 +125,6 @@
         sendAction("{{ route('vk.mass.sexy-photo.publish') }}");
 
     document.getElementById('hidden').onclick = () =>
-        sendAction("{{ route('vk.mass.hidden') }}");
+        sendAction("{{ route('vk.hidden') }}");
 </script>
 @endpush

@@ -20,7 +20,7 @@
                 </button>
 
                 <button type="button" id="hidden" class="btn btn-danger btn-sm">
-                    <i class="fas fa-trash"></i> Скрыть
+                    <i class="fas fa-trash"></i> Убрать из очереди
                 </button>
 
             </div>

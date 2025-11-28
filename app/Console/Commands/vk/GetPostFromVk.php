@@ -21,7 +21,7 @@ class GetPostFromVk extends Command
      *
      * @var string
      */
-    protected $signature = 'app:get-post-from-vk';
+    protected $signature = 'command:get-post-from-vk';
 
     /**
      * The console command description.

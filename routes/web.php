@@ -32,7 +32,7 @@ Route::group(['prefix' => 'vk', 'middleware' => 'auth',], function () {
     Route::post('vk-sexy-publish', [VkController::class, 'vkSexyPublish'])->name('vk.mass.sexy-photo.publish');
     Route::post('vk-anime-set-queue', [VkController::class, 'vkAnimeSetQueue'])->name('vk.mass.anime-photo.set-queue');
 
-    Route::post('post-hidden ', [VkController::class, 'postHidden'])->name('vk.mass.hidden');
+    Route::post('post-hidden', [VkController::class, 'postHidden'])->name('vk.hidden');
 });
 
 Route::group(['prefix' => 'tumblr', 'middleware' => 'auth',], function () {
