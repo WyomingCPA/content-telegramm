@@ -46,7 +46,6 @@ class GetPostFromTelegrammSexy extends Command
         ];
         shuffle($list_blog_name);
 
-
         foreach ($list_blog_name as $item_blog) {
             $client = new Client($options);
             $response = $client->request('GET', $item_blog)->getBody()->getContents();
