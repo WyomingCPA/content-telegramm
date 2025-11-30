@@ -314,6 +314,12 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+        ['header' => 'Dashboard'],
+        [
+            'text' => 'Main',
+            'url' => 'dashboard',
+        ],
+        ['header' => 'Reblogging'],
         [
             'text' => 'VK Source',
             'icon' => 'fas fa-fw fa-share',

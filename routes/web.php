@@ -21,13 +21,12 @@ Route::get('/', function () {
 require __DIR__ . '/settings.php';
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth',], function () {
-    Route::get('', [DashboardController::class, 'index'])->name('main');;
+    Route::get('', [DashboardController::class, 'index'])->name('main');
 });
-
 
 Route::group(['prefix' => 'vk', 'middleware' => 'auth',], function () {
     Route::get('anime-photo-all', [VkController::class, 'vkAnimeAll'])->name('vk.anime-photo-all');
-    Route::get('sexy-photo-all', [VkController::class, 'sexyPhotoAll']);
+    Route::get('sexy-photo-all', [VkController::class, 'sexyPhotoAll'])->name('vk.sexy-photo-all');
     Route::post('vk-anime-publish', [VkController::class, 'vkAnimePublish'])->name('vk.mass.anime.photo.publish');
     Route::post('vk-sexy-publish', [VkController::class, 'vkSexyPublish'])->name('vk.mass.sexy-photo.publish');
     Route::post('vk-anime-set-queue', [VkController::class, 'vkAnimeSetQueue'])->name('vk.mass.anime-photo.set-queue');
