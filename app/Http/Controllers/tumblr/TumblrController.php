@@ -29,7 +29,6 @@ class TumblrController extends Controller
             ->whereNotIn('id', $favorite_ids)
             ->orderBy('created_at', 'desc');
 
-
         return view('tumblr.sexy-photo', [
             'posts' => $objects->paginate(20)
         ]);

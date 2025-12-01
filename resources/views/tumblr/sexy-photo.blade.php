@@ -52,8 +52,8 @@
                             <input type="checkbox" name="ids[]" value="{{ $post->id }}" class="row-check">
                         </td>
                         <td>{{ $post->id }}</td>
-                        <td><img src="{{ $post->attachments[0][1] }}" class="elevation-2" width="100"></td>
-                        <td>{{ count((array)$post->attachments[0])-1 }}</td>
+                        <td><img src="{{ $post->attachments[0] }}" class="elevation-2" width="100"></td>
+                        <td>{{ count((array)$post->attachments)-1 }}</td>
                         <td><a class="link" target="_blank" href="https://vk.com/{{ $post->link }}">Посмотреть</a></td>
                         <td>{{ $post->created_at }}</td>
                     </tr>
