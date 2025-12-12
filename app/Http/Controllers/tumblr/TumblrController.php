@@ -30,7 +30,7 @@ class TumblrController extends Controller
             ->orderBy('created_at', 'desc');
 
         return view('tumblr.sexy-photo', [
-            'posts' => $objects->paginate(20)
+            'posts' => $objects->paginate(50)
         ]);
     }
 
@@ -45,7 +45,7 @@ class TumblrController extends Controller
             ->orderBy('created_at', 'desc');
 
         return view('tumblr.sexy-video', [
-            'posts' => $objects->paginate(20)
+            'posts' => $objects->paginate(50)
         ]);
     }
 
@@ -60,7 +60,7 @@ class TumblrController extends Controller
             ->orderBy('created_at', 'desc');
 
         return view('tumblr.anime-photo', [
-            'posts' => $objects->paginate(20)
+            'posts' => $objects->paginate(50)
         ]);
     }
 
@@ -75,7 +75,7 @@ class TumblrController extends Controller
             ->orderBy('created_at', 'desc');
 
         return view('tumblr.anime-video', [
-            'posts' => $objects->paginate(20)
+            'posts' => $objects->paginate(50)
         ]);
     }
 }

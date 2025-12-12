@@ -25,21 +25,8 @@ class VkController extends Controller
             ->whereJsonLength('attachments', '>', 0)
             ->whereNotIn('id', $favorite_ids)
             ->orderBy('created_at', 'desc');
-        $categories = Category::pluck('name')->toArray();
-        $count = $objects->count();
-        $sort = $request->get('sort');
-        $direction = $request->get('direction');
-        $name = $request->get('title');
-        $category_value = ['anime'];
-        $created_by = $request->get('created_by');
-        $type = $request->get('type');
-        $limit = 50;
-        $page = (int) $request->get('page');
-        $created_at = $request->get('created_at');
 
-        if ($name !== null) {
-            $objects->where('title', 'like', '%' . $name['searchTerm'] . '%');
-        }
+        $category_value = ['anime'];
         if ($category_value !== null) {
             $category_ids = Category::whereIn('name', $category_value)->pluck('id')->toArray();
 
@@ -47,10 +34,8 @@ class VkController extends Controller
                 $query->whereIn('category_id', array_values($category_ids));
             });
         }
-        $objects->offset($limit * ($page - 1))->limit($limit);
-
         return view('vk.anime-photo', [
-            'posts' => $objects->paginate(20)
+            'posts' => $objects->paginate(50)
         ]);
     }
     public function sexyPhotoAll(Request $request)
@@ -89,7 +74,7 @@ class VkController extends Controller
         //    echo "break";
         //}
         return view('vk.sexy-photo', [
-            'posts' => $objects->paginate(20)
+            'posts' => $objects->paginate(50)
         ]);
     }
     public function vkAnimePublish(Request $request)
