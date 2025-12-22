@@ -57,7 +57,7 @@ class CreateAdvertPost extends Command
             ->orderBy('updated_at', 'desc');
 
         $post = $objects->inRandomOrder()->first();
-
+        $post->touch();
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
         // ID группы или канала, куда отправляем
         $chatIds = [
