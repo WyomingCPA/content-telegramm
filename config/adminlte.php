@@ -392,6 +392,15 @@ return [
             'text' => 'Добавить группу',
             'url' => 'group/create',
         ],
+        ['header' => 'Рекламма'],
+        [
+            'text' => 'Список рекламмных постов',
+            'url' => 'advertising/index',
+        ],
+        [
+            'text' => 'Добавить обьявление',
+            'url' => 'advertising/create',
+        ],
     ],
 
     /*

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('text', 2000);
             $table->string('link');
             $table->json('attachments');
-            $table->enum('type', ['photo', 'video'])->default('photo');
+            $table->enum('type', ['photo', 'video', 'ad'])->default('photo');
             $table->enum('network', ['vk', 'tumblr', 'telegramm'])->default('vk');
             $table->boolean('is_publish')->unsigned()->nullable();
             $table->boolean('is_hidden')->unsigned()->nullable();

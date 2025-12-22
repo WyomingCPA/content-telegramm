@@ -12,6 +12,7 @@ use App\Http\Controllers\vk\VkController;
 use App\Http\Controllers\queue\VkController as QueueVkController;
 use App\Http\Controllers\queue\QueueController;
 use App\Http\Controllers\tumblr\TumblrController;
+use App\Http\Controllers\advert\AdvertController;
 
 Auth::routes();
 
@@ -53,6 +54,16 @@ Route::group(['prefix' => 'telegram', 'middleware' => 'auth',], function () {
     Route::post('anime-photo-telegram-publish', [TelegramController::class, 'animePhotoPublish'])->name('telegram.anime-photo');
     Route::post('sexy-photo-telegram-publish', [TelegramController::class, 'sexyPhotoPublish'])->name('telegram.sexy-photo');
     Route::post('sexy-video-telegram-publish', [TelegramController::class, 'sexyVideoPublish'])->name('telegram.sexy-video');
+});
+Route::group(['prefix' => 'advertising', 'middleware' => 'auth',], function () {
+    Route::get('create', [AdvertController::class, 'create']);
+    Route::get('/detail/{id}', [AdvertController::class, 'edit'])->name('advertising.detail');
+    Route::get('/edit/{id}', [AdvertController::class, 'edit'])->name('advertising.edit');
+    Route::post('/update/{id}', [AdvertController::class, 'update'])->name('advertising.update');
+    Route::get('index', [AdvertController::class, 'index'])->name('advertising.index');
+    Route::post('store', [AdvertController::class, 'store'])->name('advertising.store');
+    Route::post('delete/{id}', [AdvertController::class, 'delete'])->name('advertising.delete');
+    Route::patch('update-status/{id}', [AdvertController::class, 'updateStatus'])->name('advertising.update-status');
 });
 
 Route::group(['prefix' => 'group', 'middleware' => 'auth',], function () {
