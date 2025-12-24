@@ -36,7 +36,10 @@ class GetPostPhotoAnime extends Command
         $list_blog_name = [
             'https://t.me/s/mysavedpicturesdontenterpls',
             'https://t.me/s/anime_art_Ai',
-            'https://t.me/s/bluearchive3'
+            'https://t.me/s/bluearchive3',
+            'https://t.me/s/anime_pics_jpg',
+            'https://t.me/s/animegirlzzz',
+            'https://t.me/s/anime_foto_art_18'
         ];
 
         $options = [
