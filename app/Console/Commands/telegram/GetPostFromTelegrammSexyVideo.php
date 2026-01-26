@@ -36,7 +36,6 @@ class GetPostFromTelegrammSexyVideo extends Command
         $list_blog_name = [
             'https://t.me/s/boucy_meatballs',
             'https://t.me/s/sunsetparty69',
-            
         ];
 
         $options = [

@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use TelegramBot\Api\BotApi;
+
 use CURLFile;
 
 class TelegramHelper
@@ -13,6 +14,7 @@ class TelegramHelper
     {
         $botToken = env('TELEGRAM_TOKEN'); // храните токен в config/services.php
         $this->bot = new BotApi($botToken);
+        $this->bot->setCurlOption(CURLOPT_TIMEOUT, 60);
     }
 
     /**
@@ -34,15 +36,15 @@ class TelegramHelper
     }
 
     public function sendVideos(string|array $chatId, string|array $urls, ?string $caption = null, string $parseMode = 'Markdown'): void
-{
-    if (is_string($urls)) {
-        $this->sendSingleVideo($chatId, $urls, $caption, $parseMode);
-    } elseif (is_array($urls)) {
-        //$this->sendMultipleVideos($chatId, $urls, $caption, $parseMode);
-    } else {
-        throw new \InvalidArgumentException("urls должен быть строкой или массивом");
+    {
+        if (is_string($urls)) {
+            $this->sendSingleVideo($chatId, $urls, $caption, $parseMode);
+        } elseif (is_array($urls)) {
+            //$this->sendMultipleVideos($chatId, $urls, $caption, $parseMode);
+        } else {
+            throw new \InvalidArgumentException("urls должен быть строкой или массивом");
+        }
     }
-}
 
     protected function sendSinglePhoto(string|array $chatId, string $url, ?string $caption, string $parseMode): void
     {
