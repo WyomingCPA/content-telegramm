@@ -14,7 +14,7 @@ class TelegramHelper
     {
         $botToken = env('TELEGRAM_TOKEN'); // храните токен в config/services.php
         $this->bot = new BotApi($botToken);
-        $this->bot->setCurlOption(CURLOPT_TIMEOUT, 60);
+        $this->bot->setCurlOption(CURLOPT_TIMEOUT, 240);
     }
 
     /**
