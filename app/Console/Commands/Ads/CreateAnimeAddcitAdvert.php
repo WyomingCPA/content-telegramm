@@ -65,7 +65,7 @@ class CreateAnimeAddcitAdvert extends Command
             //echo $objects->count();
         }
 
-        $post = $objects->inRandomOrder()->first();
+        $post = $objects->orderByRaw('RAND()')->first();
 
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
         // ID группы или канала, куда отправляем
