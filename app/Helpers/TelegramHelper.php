@@ -14,7 +14,7 @@ class TelegramHelper
     {
         $botToken = env('TELEGRAM_TOKEN'); // храните токен в config/services.php
         $this->bot = new BotApi($botToken);
-        $this->bot->setCurlOption(CURLOPT_TIMEOUT, 300);
+        $this->bot->setCurlOption(CURLOPT_TIMEOUT, 500);
         $this->bot->setCurlOption(CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         $this->bot->setCurlOption(CURLOPT_RETURNTRANSFER, true);
         $this->bot->setCurlOption(CURLOPT_NOPROGRESS, false);
@@ -27,12 +27,35 @@ class TelegramHelper
                 $upload_size,
                 $uploaded
             ) {
-
+                static $startTime = null;
                 if ($upload_size > 0) {
-                    $percent = round(($uploaded / $upload_size) * 100, 2);
-                    $remaining = $upload_size - $uploaded;
+                    if ($startTime === null) {
+                        $startTime = microtime(true);
+                    }
 
-                    echo "\rЗагружено: {$percent}% | Осталось: {$remaining} байт   ";
+                    $elapsed = microtime(true) - $startTime;
+
+                    $percent = round(($uploaded / $upload_size) * 100, 2);
+
+                    $uploadedMB  = round($uploaded / 1024 / 1024, 2);
+                    $totalMB     = round($upload_size / 1024 / 1024, 2);
+                    $remainingMB = round(($upload_size - $uploaded) / 1024 / 1024, 2);
+
+                    $speed = $elapsed > 0 ? $uploaded / $elapsed : 0; // bytes/sec
+                    $speedMB = round($speed / 1024 / 1024, 2);
+
+                    $eta = $speed > 0 ? round(($upload_size - $uploaded) / $speed) : 0;
+
+                    $etaFormatted = gmdate("i:s", $eta);
+
+                    echo sprintf(
+                        "\r🚀 %6.2f%% | %6.2f / %6.2f MB | ⏳ ETA: %s | ⚡ %4.2f MB/s      ",
+                        $percent,
+                        $uploadedMB,
+                        $totalMB,
+                        $etaFormatted,
+                        $speedMB
+                    );
                 }
             }
         );
