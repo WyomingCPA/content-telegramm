@@ -69,7 +69,7 @@ class CreateAnimeAddcitAdvert extends Command
 
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
         // ID группы или канала, куда отправляем
-        $chatId = -1002366645779;
+        $chatId = -1001771871700;
         $ttlHours = 3; //Время жизни сообщения в часах
         $text = "Check Other Channels 📌";
 
