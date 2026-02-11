@@ -15,6 +15,27 @@ class TelegramHelper
         $botToken = env('TELEGRAM_TOKEN'); // храните токен в config/services.php
         $this->bot = new BotApi($botToken);
         $this->bot->setCurlOption(CURLOPT_TIMEOUT, 240);
+
+        $this->bot->setCurlOption(CURLOPT_RETURNTRANSFER, true);
+        $this->bot->setCurlOption(CURLOPT_NOPROGRESS, false);
+        $this->bot->setCurlOption(
+            CURLOPT_XFERINFOFUNCTION,
+            function (
+                $resource,
+                $download_size,
+                $downloaded,
+                $upload_size,
+                $uploaded
+            ) {
+
+                if ($upload_size > 0) {
+                    $percent = round(($uploaded / $upload_size) * 100, 2);
+                    $remaining = $upload_size - $uploaded;
+
+                    echo "\rЗагружено: {$percent}% | Осталось: {$remaining} байт   ";
+                }
+            }
+        );
     }
 
     /**
