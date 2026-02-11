@@ -29,11 +29,12 @@ Schedule::command('app:get-post-photo-anime')->hourly();
 Schedule::command('command:check-is-file')->daily();
 
 //advert
-Schedule::command('app:create-sexy-ads')->everySixHours($minutes = 40);
-Schedule::command('app:create-anime-ads')->everySixHours($minutes = 40);
+Schedule::command('app:create-sexy-ads')->daily();
+Schedule::command('app:create-anime-ads')->daily();
+Schedule::command('app:create-anime-addcit-advert')->everySixHours($minutes = 40);
 Schedule::command('app:create-advert-post')->everySixHours($minutes = 25);
 //Schedule::command('app:create-advert-tix-list-button')->daily();
 //$schedule->command('command:create-advert-list-button')->daily();
-Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes();
+//Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes();
 
 Schedule::command('app:delete-ads')->hourly();
