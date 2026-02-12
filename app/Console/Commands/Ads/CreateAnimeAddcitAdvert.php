@@ -56,7 +56,7 @@ class CreateAnimeAddcitAdvert extends Command
         });
 
         if ($objects->count() == 0) {
-            $objects =  Post::where('is_publish', true)->where('is_hidden', false)->orderBy('updated_at', 'asc');
+            $objects =  Post::where('is_publish', true)->where('is_hidden', false);
             $category_value = ['anime'];
             $category_ids = Category::whereIn('name', $category_value)->pluck('id')->toArray();
             $objects->whereHas('categories', function ($query) use ($category_ids) {
