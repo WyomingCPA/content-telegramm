@@ -25,7 +25,7 @@ Schedule::command('app:get-post-from-telegramm-sexy-video')->hourly();
 Schedule::command('app:get-post-photo-anime')->hourly();
 
 //
-Schedule::command('command:check-is-file')->daily();
+Schedule::command('app:chech-is-file')->daily();
 
 //advert
 Schedule::command('app:create-sexy-ads')->daily();
