@@ -84,7 +84,7 @@ class QueueAnime extends Command
                 //$chatId = '-414528593';
                 $bot = new BotApi(env('TELEGRAM_TOKEN'));
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
-
+                $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
                 $media = new ArrayOfInputMedia();
                 foreach ($list_img as $img) {
                     if (count($list_img) != 1) {
