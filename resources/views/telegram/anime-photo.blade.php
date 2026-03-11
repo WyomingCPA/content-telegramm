@@ -17,6 +17,9 @@
             <button type="submit" class="btn btn-success btn-sm" id="post-publish" disabled>
                 Опубликовать в Телеграмм
             </button>
+            <button type="button" id="set-queue" class="btn btn-success btn-sm">
+                <i class="fas fa-check"></i> Добавить в очередь
+            </button>
         </div>
 
         <div class="card-body p-0">
@@ -90,5 +93,34 @@
         let selected = document.querySelectorAll('.row-check:checked').length;
         document.getElementById('post-publish').disabled = (selected === 0);
     }
+    function getSelectedIds() {
+        let ids = [];
+        document.querySelectorAll('.row-check:checked').forEach(c => {
+            ids.push(c.value);
+        });
+        return ids;
+    }
+    // Универсальная отправка POST
+    function sendAction(url) {
+        let ids = getSelectedIds();
+
+        if (ids.length === 0) {
+            alert("Ничего не выбрано");
+            return;
+        }
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                ids: ids
+            })
+        }).then(r => location.reload());
+    }
+    document.getElementById('set-queue').onclick = () =>
+        sendAction("{{ route('queue.set-queue') }}");
 </script>
 @endpush

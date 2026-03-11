@@ -35,5 +35,6 @@ Schedule::command('app:create-advert-post')->everySixHours($minutes = 25);
 //Schedule::command('app:create-advert-tix-list-button')->daily();
 //$schedule->command('command:create-advert-list-button')->daily();
 Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes();
+Schedule::command('app:queue-anime-photo-telegram')->everyTenMinutes();
 
 Schedule::command('app:delete-ads')->hourly();

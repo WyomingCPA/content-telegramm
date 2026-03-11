@@ -20,11 +20,12 @@ class TelegramController extends Controller
 {
     public function animePhotoAll(Request $request)
     {
+        $favorite_ids = Auth::user()->queuesPost->pluck('id')->toArray();
         $objects = Post::where('is_publish', false)->where('is_hidden', false)
             ->where('network', 'telegramm')
             ->where('type', 'photo')
             ->where('owner_id', 313)
-            //->whereNotIn('id', $favorite_ids)
+            ->whereNotIn('id', $favorite_ids)
             ->orderBy('created_at', 'desc');
 
         return view('telegram.anime-photo', [
