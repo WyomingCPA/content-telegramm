@@ -93,8 +93,14 @@ class TelegramHelper
     protected function sendSinglePhoto(string|array $chatId, string $url, ?string $caption, string $parseMode): void
     {
         $tmpFile = sys_get_temp_dir() . "/tg_" . uniqid() . ".jpg";
-        file_put_contents($tmpFile, file_get_contents($url));
+        $data = @file_put_contents($tmpFile, file_get_contents($url));
+        echo $data;
+        if ($data === false) {
+            // можно записать в лог
+            //\Log::warning("Image not found: " . $url);
 
+            return;
+        }
         $this->bot->sendPhoto($chatId, new CURLFile($tmpFile), $caption ?? '', null, null, false, $parseMode);
         unlink($tmpFile);
     }
@@ -110,7 +116,13 @@ class TelegramHelper
 
             foreach ($chunk as $url) {
                 $tmpFile = sys_get_temp_dir() . "/tg_" . uniqid() . ".jpg";
-                file_put_contents($tmpFile, file_get_contents($url));
+                $data = @file_put_contents($tmpFile, file_get_contents($url));
+                if ($data === false) {
+                    // можно записать в лог
+                    //\Log::warning("Image not found: " . $url);
+
+                    continue;
+                }
 
                 $item = [
                     'type'  => 'photo',
