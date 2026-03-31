@@ -85,6 +85,11 @@ class QueueAnime extends Command
                 $bot = new BotApi(env('TELEGRAM_TOKEN'));
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
                 $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+                // Настройка CURL для использования SOCKS5 с авторизацией
+                $bot->setCurlOption(CURLOPT_PROXY, '81.177.135.61:10808');
+                $bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+                $bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'wyomingcpa:83448344f');
+
                 $media = new ArrayOfInputMedia();
                 foreach ($list_img as $img) {
                     if (count($list_img) != 1) {
