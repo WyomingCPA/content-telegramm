@@ -12,7 +12,7 @@ Artisan::command('inspire', function () {
 Schedule::command('command:get-post-from-vk')->hourly();
 Schedule::command('command:delete-old-post')->everyTwoHours();
 Schedule::command('command:publish-anime-queue')->hourly();
-Schedule::command('command:publish-anime2-queue')->everyTwoHours()->appendOutputTo(storage_path('logs/scheduler.log'));;
+Schedule::command('command:publish-anime2-queue')->hourly();
 Schedule::command('command:publish-sexy-queue')->everyTwoHours();
 
 //tumblr 
@@ -30,8 +30,8 @@ Schedule::command('app:chech-is-file')->daily();
 //advert
 Schedule::command('app:create-sexy-ads')->daily();
 Schedule::command('app:create-anime-ads')->daily();
-Schedule::command('app:create-anime-addcit-advert')->everySixHours($minutes = 40);
-Schedule::command('app:create-advert-post')->everySixHours($minutes = 25);
+Schedule::command('app:create-anime-addcit-advert')->everySixHours();
+Schedule::command('app:create-advert-post')->everySixHours();
 //Schedule::command('app:create-advert-tix-list-button')->daily();
 //$schedule->command('command:create-advert-list-button')->daily();
 Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes();
