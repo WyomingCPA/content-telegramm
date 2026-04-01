@@ -12,7 +12,7 @@ Artisan::command('inspire', function () {
 Schedule::command('command:get-post-from-vk')->hourly();
 Schedule::command('command:delete-old-post')->everyTwoHours();
 Schedule::command('command:publish-anime-queue')->hourly();
-Schedule::command('command:publish-anime2-queue')->everyTwoHours();
+Schedule::command('command:publish-anime2-queue')->everyTwoHours()->appendOutputTo(storage_path('logs/scheduler.log'));;
 Schedule::command('command:publish-sexy-queue')->everyTwoHours();
 
 //tumblr 

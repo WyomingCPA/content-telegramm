@@ -18,6 +18,11 @@ class TelegramHelper
         $this->bot->setCurlOption(CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         $this->bot->setCurlOption(CURLOPT_RETURNTRANSFER, true);
         $this->bot->setCurlOption(CURLOPT_NOPROGRESS, false);
+        // Настройка CURL для использования SOCKS5 с авторизацией
+        $this->bot->setCurlOption(CURLOPT_PROXY, '81.177.135.61:10808');
+        $this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+        $this->bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'wyomingcpa:83448344f');
+
         $this->bot->setCurlOption(
             CURLOPT_XFERINFOFUNCTION,
             function (
@@ -92,6 +97,7 @@ class TelegramHelper
 
     protected function sendSinglePhoto(string|array $chatId, string $url, ?string $caption, string $parseMode): void
     {
+        
         $tmpFile = sys_get_temp_dir() . "/tg_" . uniqid() . ".jpg";
         $data = @file_put_contents($tmpFile, file_get_contents($url));
         echo $data;

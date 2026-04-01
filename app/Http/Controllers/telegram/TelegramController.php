@@ -181,6 +181,7 @@ class TelegramController extends Controller
                 //$chatId = '-414528593';
                 $bot = new BotApi(env('TELEGRAM_TOKEN'));
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
+                
 
                 $media = new ArrayOfInputMedia();
                 $messageText = " #anime #art #tyan \n\n\n<a href='https://t.me/+ATd62K2jKB43YzIy'>Anime_Tyn_TG</a>";
