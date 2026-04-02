@@ -54,7 +54,7 @@ class QueueSexyPhotoTelegram extends Command
             ->where('network', 'telegramm')
             ->where('is_hidden', false)
             ->whereIn('id', $favorite_ids)
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'asc');
 
         $post = $objects->inRandomOrder()->first();
         echo $post->id;
