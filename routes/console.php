@@ -34,6 +34,8 @@ Schedule::command('app:create-anime-addcit-advert')->everySixHours()->runInBackg
 Schedule::command('app:create-advert-post')->everySixHours()->runInBackground()->withoutOverlapping();
 //Schedule::command('app:create-advert-tix-list-button')->daily();
 //$schedule->command('command:create-advert-list-button')->daily();
+
+//public post type telegram
 Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-anime-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-sexy-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();

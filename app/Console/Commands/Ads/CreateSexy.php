@@ -74,7 +74,7 @@ class CreateSexy extends Command
         $ttlHours = 3; //Время жизни сообщения в часах
         $text = "Check Other Channels 📌";
 
-        // Создаём inline-клавиатуру с 3 кнопками
+        // Создаём inline-клавиатуру
 
         $keyboard = new InlineKeyboardMarkup([
             [['text' => '❤ Sexy View ❤', 'url' => 'https://t.me/+bnRfpjt2rJdmYzgy']],
