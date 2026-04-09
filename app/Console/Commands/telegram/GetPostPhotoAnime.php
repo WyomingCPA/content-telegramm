@@ -39,7 +39,9 @@ class GetPostPhotoAnime extends Command
             'https://t.me/s/bluearchive3',
             'https://t.me/s/anime_pics_jpg',
             'https://t.me/s/animegirlzzz',
-            'https://t.me/s/anime_foto_art_18'
+            'https://t.me/s/anime_foto_art_18',
+            'https://t.me/s/Waifus_Wave',
+            'https://t.me/s/kvdasai'
         ];
 
         $options = [
