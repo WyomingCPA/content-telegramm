@@ -12,6 +12,7 @@ class TelegramHelper
 
     public function __construct()
     {
+        $proxy_env = env('SERVER_PROXY');
         $botToken = env('TELEGRAM_TOKEN'); // храните токен в config/services.php
         $this->bot = new BotApi($botToken);
         $this->bot->setCurlOption(CURLOPT_TIMEOUT, 0);
@@ -19,7 +20,7 @@ class TelegramHelper
         $this->bot->setCurlOption(CURLOPT_RETURNTRANSFER, true);
         $this->bot->setCurlOption(CURLOPT_NOPROGRESS, false);
         // Настройка CURL для использования SOCKS5 с авторизацией
-        $this->bot->setCurlOption(CURLOPT_PROXY, '81.177.135.61:27504');
+        $this->bot->setCurlOption(CURLOPT_PROXY, $proxy_env);//'127.0.0.1:27504'
         //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
         $this->bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'test:83448344f');
 
