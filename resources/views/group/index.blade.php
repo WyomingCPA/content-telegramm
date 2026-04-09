@@ -21,6 +21,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Group</th>
+                    <th>Опубликовано сегодня</th>
                     <th>List Source</th>
                     <th>Status</th>
                     <th>updated_at</th>
@@ -33,6 +34,7 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->group }}</td>
+                    <td>{{ $item->posts_count }}</td>
                     <td>{{ $item->count_source }}
                         <a href="{{ route('group.source', $item->id) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-eye"></i> Редактировать
