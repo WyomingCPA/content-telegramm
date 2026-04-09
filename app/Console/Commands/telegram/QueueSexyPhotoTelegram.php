@@ -100,7 +100,7 @@ class QueueSexyPhotoTelegram extends Command
                 $bot->sendMediaGroup($chatId, $media);
                 $post->is_publish = true;
                 $post->save();
-                
+
                 $isStart->increment('posts_count');
             }
 
@@ -109,6 +109,7 @@ class QueueSexyPhotoTelegram extends Command
             $user->queuesPost()->detach(array_values([$post->id]));
             $post->is_hidden = true;
             $post->save();
+            $isStart->increment('posts_count');
             echo $e->getMessage();
         }
     }
