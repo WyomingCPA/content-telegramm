@@ -38,6 +38,8 @@ Schedule::command('app:create-advert-post')->everySixHours()->runInBackground()-
 //public post type telegram
 Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-anime-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();
+Schedule::command('app:queue-anime-addcit-photo-telegram')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-sexy-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();
+
 
 Schedule::command('app:delete-ads')->hourly()->runInBackground()->withoutOverlapping();
