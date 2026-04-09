@@ -36,7 +36,7 @@ class QueueAnime extends Command
      */
     public function handle()
     {
-
+        $proxy_env = env('SERVER_PROXY');
         //Сделать проверку запуска публикаций для телеграмм
         $isStart = Group::where('slug', '=', 'anime')->first();
         if (!$isStart->is_start) {
@@ -86,9 +86,9 @@ class QueueAnime extends Command
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
                 $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
                 // Настройка CURL для использования SOCKS5 с авторизацией
-                $bot->setCurlOption(CURLOPT_PROXY, '81.177.135.61:10808');
-                $bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
-                $bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'wyomingcpa:83448344f');
+                $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+                //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+                $bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'test:83448344f');
 
                 $media = new ArrayOfInputMedia();
                 foreach ($list_img as $img) {
