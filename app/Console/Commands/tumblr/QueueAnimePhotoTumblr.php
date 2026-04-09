@@ -43,6 +43,11 @@ class QueueAnimePhotoTumblr extends Command
             echo "Не публикуем";
             return Command::SUCCESS;
         }
+        // проверка лимита
+        if ($isStart->posts_today >= 25) {
+            echo "Лимит публикаций достигнут (25)";
+            return Command::SUCCESS;
+        }
 
         $user = User::select('id')->where('email', 'WyomingCPA@yandex.ru')->first();
         $favorite_ids = $user->queuesPost->pluck('id')->toArray();
@@ -87,6 +92,8 @@ class QueueAnimePhotoTumblr extends Command
                 $bot->sendMediaGroup($chatId, $media);
                 $post->is_publish = true;
                 $post->save();
+                
+                $isStart->increment('posts_count');
             }
         } catch (\Error $e) {
             $user->queuesPost()->detach(array_values([$post->id]));

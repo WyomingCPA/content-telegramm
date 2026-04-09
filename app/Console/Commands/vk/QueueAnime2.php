@@ -42,6 +42,7 @@ class QueueAnime2 extends Command
         //    echo "Не публикуем";
         //    return Command::SUCCESS;
         //}
+        
 
         $user = User::select('id')->where('email', 'WyomingCPA@yandex.ru')->first();
         $favorite_ids = $user->queuesPost->pluck('id')->toArray();

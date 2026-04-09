@@ -100,6 +100,8 @@ class QueueSexyPhotoTelegram extends Command
                 $bot->sendMediaGroup($chatId, $media);
                 $post->is_publish = true;
                 $post->save();
+                
+                $isStart->increment('posts_count');
             }
 
             echo 'Публикация выполена успешно';

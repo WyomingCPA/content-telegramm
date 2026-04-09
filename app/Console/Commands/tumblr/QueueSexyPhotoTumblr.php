@@ -42,6 +42,11 @@ class QueueSexyPhotoTumblr extends Command
             echo "Не публикуем";
             return Command::SUCCESS;
         }
+        // проверка лимита
+        if ($isStart->posts_today >= 25) {
+            echo "Лимит публикаций достигнут (25)";
+            return Command::SUCCESS;
+        }
 
         //$count_view = Views::select('last_post_view')->where('groups_id', $isStart->id)->orderBy('id', 'desc')->first();
         //if ($count_view->last_post_view < 50) {
@@ -92,6 +97,7 @@ class QueueSexyPhotoTumblr extends Command
                 $bot->sendMediaGroup($chatId, $media);
                 $post->is_publish = true;
                 $post->save();
+                $isStart->increment('posts_count');
             }
         } catch (\Error $e) {
             $user->queuesPost()->detach(array_values([$post->id]));

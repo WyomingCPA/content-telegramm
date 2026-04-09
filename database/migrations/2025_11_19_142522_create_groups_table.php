@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->text('thumbnail')->nullable();
             $table->boolean('is_start')->unsigned()->nullable();
+            $table->unsignedInteger('posts_count')->default(0);
             $table->timestamps();
         });
     }

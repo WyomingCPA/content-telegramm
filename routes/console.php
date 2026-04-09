@@ -43,3 +43,5 @@ Schedule::command('app:queue-sexy-photo-telegram')->everyFifteenMinutes()->runIn
 
 
 Schedule::command('app:delete-ads')->hourly()->runInBackground()->withoutOverlapping();
+
+Schedule::command('app:reset-daily-posts')->daily()->runInBackground()->withoutOverlapping();

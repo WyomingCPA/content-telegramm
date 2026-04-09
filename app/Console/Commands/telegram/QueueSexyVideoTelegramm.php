@@ -85,6 +85,8 @@ class QueueSexyVideoTelegramm extends Command
                 $telegram->sendVideos($chatId, $video[1], $messageText, 'HTML');
                 $post->is_publish = true;
                 $post->save();
+
+                $isStart->increment('posts_count');
             }
         } catch (\Error $e) {
             $user->queuesPost()->detach(array_values([$post->id]));
