@@ -103,7 +103,7 @@ class BotController extends Controller
                 'message_id' => $messageId,
                 'delete_after' => Carbon::now()->addHours($ttlHours),
             ]);
-        }        
+        }
 
         return response()->json([
             'message' => $messageResponse,
@@ -112,6 +112,9 @@ class BotController extends Controller
     }
     public function createAnimeAdvert(Request $request)
     {
+        $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
+
         $messageResponse = '-';
         $isStart = Group::where('slug', '=', 'sexy')->first();
         if (!$isStart->is_start) {
@@ -146,6 +149,11 @@ class BotController extends Controller
         $post = $objects->inRandomOrder()->first();
 
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
+        $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+        // Настройка CURL для использования SOCKS5 с авторизацией
+        $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+        //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+        $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
         // ID группы или канала, куда отправляем
         $chatId = -1002366645779;
         $ttlHours = 3; //Время жизни сообщения в секундах
@@ -180,6 +188,9 @@ class BotController extends Controller
 
     public function createSexyAdvert(Request $request)
     {
+        $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
+        
         $messageResponse = '-';
         $isStart = Group::where('slug', '=', 'anime')->first();
         if (!$isStart->is_start) {
@@ -214,6 +225,13 @@ class BotController extends Controller
         $post = $objects->inRandomOrder()->first();
 
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
+
+        $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+        // Настройка CURL для использования SOCKS5 с авторизацией
+        $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+        //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+        $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
+
         // ID группы или канала, куда отправляем
         $chatId = -1001771871700;
         $ttlHours = 3; //Время жизни сообщения в секундах
