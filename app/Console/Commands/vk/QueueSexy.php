@@ -35,6 +35,7 @@ class QueueSexy extends Command
     public function handle()
     {
         $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
         //Сделать проверку запуска публикаций для телеграмм
         $isStart = Group::where('slug', '=', 'sexy')->first();
         if (!$isStart->is_start) {
@@ -94,7 +95,7 @@ class QueueSexy extends Command
                 // Настройка CURL для использования SOCKS5 с авторизацией
                 $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
                 //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
-                $bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'test:83448344f');
+                $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
                 
                 $media = new ArrayOfInputMedia();
                 foreach ($list_img as $img) {

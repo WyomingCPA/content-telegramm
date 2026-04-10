@@ -12,7 +12,7 @@ Artisan::command('inspire', function () {
 Schedule::command('command:get-post-from-vk')->hourly()->runInBackground()->withoutOverlapping();
 Schedule::command('command:delete-old-post')->everyTwoHours()->runInBackground()->withoutOverlapping();
 Schedule::command('command:publish-anime-queue')->hourly()->runInBackground()->withoutOverlapping();
-Schedule::command('command:publish-anime2-queue')->hourly()->runInBackground()->withoutOverlapping();
+Schedule::command('command:publish-anime2-queue')->everyTwoHours()->runInBackground()->withoutOverlapping();
 Schedule::command('command:publish-sexy-queue')->everyTwoHours()->runInBackground()->withoutOverlapping();
 
 //tumblr 
