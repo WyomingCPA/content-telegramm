@@ -20,9 +20,9 @@ class TelegramHelper
         $this->bot->setCurlOption(CURLOPT_RETURNTRANSFER, true);
         $this->bot->setCurlOption(CURLOPT_NOPROGRESS, false);
         // Настройка CURL для использования SOCKS5 с авторизацией
-        $this->bot->setCurlOption(CURLOPT_PROXY, $proxy_env);//'127.0.0.1:27504'
+        $this->bot->setCurlOption(CURLOPT_PROXY, '81.177.135.61:54150'); //'127.0.0.1:27504'
         //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
-        $this->bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'test:83448344f');
+        $this->bot->setCurlOption(CURLOPT_PROXYUSERPWD, 'wyomingcpa:83448344f');
 
         $this->bot->setCurlOption(
             CURLOPT_XFERINFOFUNCTION,
@@ -74,15 +74,17 @@ class TelegramHelper
      * @param string|array $imageUrls
      * @return void
      */
-    public function sendPhotos(string|array $chatId, string|array $imageUrls, ?string $caption = null, string $parseMode = 'Markdown'): void
+    public function sendPhotos(string|array $chatId, string|array $imageUrls, ?string $caption = null, string $parseMode = 'Markdown'): bool
     {
         $imageUrls = (array) $imageUrls;
-
+        $result = false;
         if (count($imageUrls) === 1) {
-            $this->sendSinglePhoto($chatId, $imageUrls[0], $caption, $parseMode);
+            $result = $this->sendSinglePhoto($chatId, $imageUrls[0], $caption, $parseMode);
         } else {
-            $this->sendMultiplePhotos($chatId, $imageUrls, $caption, $parseMode);
+            $result = $this->sendMultiplePhotos($chatId, $imageUrls, $caption, $parseMode);
         }
+
+        return $result;
     }
 
     public function sendVideos(string|array $chatId, string|array $urls, ?string $caption = null, string $parseMode = 'Markdown'): void
@@ -96,23 +98,34 @@ class TelegramHelper
         }
     }
 
-    protected function sendSinglePhoto(string|array $chatId, string $url, ?string $caption, string $parseMode): void
+    protected function sendSinglePhoto(string|array $chatId, string $url, ?string $caption, string $parseMode): bool
     {
-        
+        $auth = base64_encode('wyomingcpa:83448344f');
+
+        $aContext = array(
+            'http' => array(
+                'proxy'           => 'tcp://81.177.135.61:54150',
+                'request_fulluri' => true,
+                'header'          => "Proxy-Authorization: Basic $auth",
+            ),
+        );
+        $cxContext = stream_context_create($aContext);
         $tmpFile = sys_get_temp_dir() . "/tg_" . uniqid() . ".jpg";
-        $data = @file_put_contents($tmpFile, file_get_contents($url));
+        $data = @file_put_contents($tmpFile, file_get_contents($url, False, $cxContext));
         echo $data;
-        if ($data === false) {
+        if ($data === 0) {
             // можно записать в лог
             //\Log::warning("Image not found: " . $url);
-
-            return;
+            unlink($tmpFile);
+            return false;
         }
+
         $this->bot->sendPhoto($chatId, new CURLFile($tmpFile), $caption ?? '', null, null, false, $parseMode);
         unlink($tmpFile);
+        return true;
     }
 
-    protected function sendMultiplePhotos(string|array $chatId, array $urls, ?string $caption, string $parseMode): void
+    protected function sendMultiplePhotos(string|array $chatId, array $urls, ?string $caption, string $parseMode): bool
     {
         $chunks = array_chunk($urls, 10); // Telegram поддерживает до 10 фото в sendMediaGroup
 
@@ -122,13 +135,24 @@ class TelegramHelper
             $first = true;
 
             foreach ($chunk as $url) {
+                $auth = base64_encode('wyomingcpa:83448344f');
+
+                $aContext = array(
+                    'http' => array(
+                        'proxy'           => 'tcp://81.177.135.61:54150',
+                        'request_fulluri' => true,
+                        'header'          => "Proxy-Authorization: Basic $auth",
+                    ),
+                );
+                $cxContext = stream_context_create($aContext);
                 $tmpFile = sys_get_temp_dir() . "/tg_" . uniqid() . ".jpg";
-                $data = @file_put_contents($tmpFile, file_get_contents($url));
-                if ($data === false) {
+                $data = @file_put_contents($tmpFile, file_get_contents($url, False, $cxContext));
+                if ($data === 0) {
                     // можно записать в лог
                     //\Log::warning("Image not found: " . $url);
 
-                    continue;
+                    unlink($tmpFile);
+                    return false;
                 }
 
                 $item = [
@@ -156,6 +180,9 @@ class TelegramHelper
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://api.telegram.org/bot{$token}/sendMediaGroup");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_PROXY, '81.177.135.61:54150');
+            //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, 'wyomingcpa:83448344f');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
             $response = curl_exec($ch);
@@ -165,12 +192,23 @@ class TelegramHelper
             foreach ($files as $file) {
                 @unlink($file->getFilename());
             }
+            return true;
         }
     }
     protected function sendSingleVideo(string|array $chatId, string $url, ?string $caption = null, string $parseMode = 'Markdown'): void
     {
+        $auth = base64_encode('wyomingcpa:83448344f');
+
+        $aContext = array(
+            'http' => array(
+                'proxy'           => 'tcp://81.177.135.61:54150',
+                'request_fulluri' => true,
+                'header'          => "Proxy-Authorization: Basic $auth",
+            ),
+        );
+        $cxContext = stream_context_create($aContext);
         $tmpFile = sys_get_temp_dir() . "/tg_" . uniqid() . ".mp4";
-        file_put_contents($tmpFile, file_get_contents($url));
+        file_put_contents($tmpFile, file_get_contents($url, False, $cxContext));
 
         $this->bot->sendVideo(
             $chatId,

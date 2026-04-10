@@ -37,6 +37,7 @@ class QueueSexyPhotoTelegram extends Command
      */
     public function handle()
     {
+        $result = false;
         $telegram = new TelegramHelper();
         //Сделать проверку запуска публикаций для телеграмм
         $isStart = Group::where('slug', '=', 'sexy')->first();
@@ -86,30 +87,32 @@ class QueueSexyPhotoTelegram extends Command
                         $imgUrls[] = $item_image;
                     }
                     // Отправка нескольких картинок
-                    $telegram->sendPhotos($chatId, $imgUrls, $messageText, 'HTML');
+                    $result = $telegram->sendPhotos($chatId, $imgUrls, $messageText, 'HTML');
                     $post->is_publish = true;
                     $post->save();
                 } else {
                     //Скачиваем картинку                  
                     //$media->addItem(new InputMediaPhoto($list_img[1], $messageText, 'HTML'));
-                    $telegram->sendPhotos($chatId, $list_img[1], $messageText, 'HTML');
+                    $result = $telegram->sendPhotos($chatId, $list_img[1], $messageText, 'HTML');
                     $post->is_publish = true;
                     $post->save();
                 }
-
-                $bot->sendMediaGroup($chatId, $media);
-                $post->is_publish = true;
-                $post->save();
-
-                $isStart->increment('posts_count');
+                if ($result) {
+                    $bot->sendMediaGroup($chatId, $media);
+                    $post->is_publish = true;
+                    $post->save();
+                    $isStart->increment('posts_count');
+                    echo 'Публикация выполена успешно';
+                }
+                else {
+                    echo 'Публикация не выполнена';
+                }
             }
 
-            echo 'Публикация выполена успешно';
         } catch (\Error $e) {
             $user->queuesPost()->detach(array_values([$post->id]));
             $post->is_hidden = true;
             $post->save();
-            $isStart->increment('posts_count');
             echo $e->getMessage();
         }
     }

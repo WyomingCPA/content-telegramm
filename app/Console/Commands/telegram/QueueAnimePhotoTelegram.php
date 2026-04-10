@@ -108,7 +108,6 @@ class QueueAnimePhotoTelegram extends Command
             $user->queuesPost()->detach(array_values([$post->id]));
             $post->is_hidden = true;
             $post->save();
-            $isStart->increment('posts_count');
             echo $e->getMessage();
         }
     }

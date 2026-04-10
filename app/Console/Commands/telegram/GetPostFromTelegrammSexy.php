@@ -43,7 +43,12 @@ class GetPostFromTelegrammSexy extends Command
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
             ],
             'force_ip_resolve' => 'v4',
-            'curl' => [CURLOPT_SSL_VERIFYPEER => false],
+            'proxy' => [
+                'http'  => "http://wyomingcpa:83448344f@81.177.135.61:54150",
+                'https' => "http://wyomingcpa:83448344f@81.177.135.61:54150",
+            ],
+            'timeout' => 30,
+            'connect_timeout' => 10,
         ];
         shuffle($list_blog_name);
 

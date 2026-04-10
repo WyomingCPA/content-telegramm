@@ -50,6 +50,12 @@ class GetPostPhotoAnime extends Command
             ],
             'curl' => [CURLOPT_SSL_VERIFYPEER => false],
             'force_ip_resolve' => 'v4',
+            'proxy' => [
+                'http'  => "http://wyomingcpa:83448344f@81.177.135.61:54150",
+                'https' => "http://wyomingcpa:83448344f@81.177.135.61:54150",
+            ],
+            'timeout' => 30,
+            'connect_timeout' => 10,
         ];
         shuffle($list_blog_name);
 
