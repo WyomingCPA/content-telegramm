@@ -79,6 +79,7 @@ class QueueAnimePhotoTelegram extends Command
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
                 $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
                 $media = new ArrayOfInputMedia();
+                $isStart->increment('posts_count');
                 if (is_array($list_img[1])) {
                     $imgUrls = [];
                     foreach ($list_img[1] as $item_image) {
@@ -100,7 +101,7 @@ class QueueAnimePhotoTelegram extends Command
                 $bot->sendMediaGroup($chatId, $media);
                 $post->is_publish = true;
                 $post->save();
-                $isStart->increment('posts_count');
+
             }
 
             echo 'Публикация выполена успешно';
