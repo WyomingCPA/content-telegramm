@@ -17,6 +17,8 @@ use TelegramBot\Api\Types\InputMedia\InputMediaPhoto;
 use \TelegramBot\Api\Types\InputMedia\ArrayOfInputMedia;
 use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 
+use App\Helpers\TelegramHelper;
+
 class CreateAnimeAddcitAdvert extends Command
 {
     /**
@@ -38,6 +40,9 @@ class CreateAnimeAddcitAdvert extends Command
      */
     public function handle()
     {
+        $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
+        $telegram = new TelegramHelper();
         //Добавить проверку на запуск
         //Сделать проверку запуска публикаций для телеграмм
         $isStart = Group::where('slug', '=', 'anime')->first();
@@ -68,6 +73,11 @@ class CreateAnimeAddcitAdvert extends Command
         $post = $objects->orderByRaw('RAND()')->first();
 
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
+        $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+        // Настройка CURL для использования SOCKS5 с авторизацией
+        $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+        //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+        $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
         // ID группы или канала, куда отправляем
         $chatId = -1001771871700;
         $ttlHours = 3; //Время жизни сообщения в часах
@@ -79,10 +89,6 @@ class CreateAnimeAddcitAdvert extends Command
             [['text' => '❤ Anime View ❤', 'url' => 'https://t.me/+7rsO9SnTiA0wMzIy'],],
         ]);
 
-        // Отправляем сообщение с кнопками
-        $media = new ArrayOfInputMedia();
-        //$media->addItem(new InputMediaVideo($video[1][0], $messageText, 'HTML'));
-        //$bot->sendMediaGroup($chatId, $media);
         $list_img = $post->attachments;
 
         $message = $bot->sendPhoto($chatId, $list_img[0][0], null, false, $keyboard);
