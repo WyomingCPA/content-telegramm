@@ -51,9 +51,14 @@ Route::group(['prefix' => 'telegram', 'middleware' => 'auth',], function () {
     Route::get('anime-photo-all', [TelegramController::class, 'animePhotoAll']);
     Route::get('sexy-photo-all', [TelegramController::class, 'sexyPhotoAll']);
     Route::get('sexy-video-all', [TelegramController::class, 'sexyVideoAll']);
+    Route::get('cats-photo-all', [TelegramController::class, 'catsPhotoAll']);
+    Route::get('cats-video-all', [TelegramController::class, 'catsVideoAll']);
     Route::post('anime-photo-telegram-publish', [TelegramController::class, 'animePhotoPublish'])->name('telegram.anime-photo');
     Route::post('sexy-photo-telegram-publish', [TelegramController::class, 'sexyPhotoPublish'])->name('telegram.sexy-photo');
     Route::post('sexy-video-telegram-publish', [TelegramController::class, 'sexyVideoPublish'])->name('telegram.sexy-video');
+
+    Route::post('cats-photo-telegram-publish', [TelegramController::class, 'catsPhotoPublish'])->name('telegram.cats-photo');
+    Route::post('cats-video-telegram-publish', [TelegramController::class, 'catsVideoPublish'])->name('telegram.cats-video');
 });
 Route::group(['prefix' => 'advertising', 'middleware' => 'auth',], function () {
     Route::get('create', [AdvertController::class, 'create']);

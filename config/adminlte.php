@@ -381,6 +381,14 @@ return [
                     'text' => 'Reblog Sexy Video',
                     'url' => 'telegram/sexy-video-all',
                 ],
+                [
+                    'text' => 'Telegram Reblog Cats',
+                    'url' => 'telegram/cats-photo-all',
+                ],
+                [
+                    'text' => 'Reblog Cats Video',
+                    'url' => 'telegram/cats-video-all',
+                ],
             ],
         ],
         ['header' => 'Управление группами'],

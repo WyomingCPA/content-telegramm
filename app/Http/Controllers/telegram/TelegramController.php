@@ -61,6 +61,80 @@ class TelegramController extends Controller
             'posts' => $objects->paginate(20)
         ]);
     }
+    public function catsPhotoAll(Request $request)
+    {
+        $favorite_ids = Auth::user()->queuesPost->pluck('id')->toArray();
+        $objects = Post::where('is_publish', false)->where('is_hidden', false)
+            ->where('network', 'telegramm')
+            ->where('type', 'photo')
+            ->where('owner_id', 113)
+            ->whereNotIn('id', $favorite_ids)
+            ->orderBy('created_at', 'desc');
+
+        return view('telegram.cats-photo', [
+            'posts' => $objects->paginate(20)
+        ]);
+    }
+    public function catsVideoAll(Request $request)
+    {
+        $favorite_ids = Auth::user()->queuesPost->pluck('id')->toArray();
+        $objects = Post::where('is_publish', false)->where('is_hidden', false)
+            ->where('network', 'telegramm')
+            ->where('type', 'video')
+            ->where('owner_id', 113)
+            ->whereNotIn('id', $favorite_ids)
+            ->orderBy('created_at', 'desc');
+
+        return view('telegram.cats-video', [
+            'posts' => $objects->paginate(20)
+        ]);
+    }
+
+    public function catsVideoPublish(Request $request)
+    {
+        $telegram = new TelegramHelper();
+
+        $rows = $request->ids;
+
+        if (!$rows) {
+            return back()->with('error', 'Ничего не выбрано.');
+        }
+
+        $select = [];
+        foreach ($rows as $value) {
+            $messageText = '';
+            //$select[] = $value['id'];
+            $post = Post::findOrFail($value);
+            $categories = $post->categories;
+            $video = $post->attachments;
+            $tags = '';
+            foreach ($categories as $item_category) {
+                $tags .= "#" . $item_category->name . " ";
+            }
+            $messageText .= "\n";
+            $messageText .= $post->text;
+            if (!empty($messageText)) {
+                $chatId = '-1002315592624';
+                //$chatId = '-414528593';
+                $bot = new BotApi(env('TELEGRAM_TOKEN'));
+                //$bot->sendMessage($chatId, $messageText, 'HTML');
+
+                $media = new ArrayOfInputMedia();
+                $messageText .= "🐾 #cats \n\n\n<a href='https://t.me/+7yj6MB0l529lZmRi'>Cats ≽^•⩊•^≼</a>";
+
+                //$media->addItem(new InputMediaVideo($video[1], $messageText, 'HTML'));
+
+                //$bot->sendMediaGroup($chatId, $media);
+
+                $telegram->sendVideos($chatId, $video[1], $messageText, 'HTML');
+                $post->is_publish = true;
+                $post->save();
+            }
+        }
+
+        return back()->with('success', 'Посты опубликованы.');
+    }
+
 
     public function sexyVideoPublish(Request $request)
     {
@@ -103,7 +177,7 @@ class TelegramController extends Controller
                 $post->save();
             }
         }
-        
+
         return back()->with('success', 'Посты опубликованы.');
     }
 
@@ -181,7 +255,7 @@ class TelegramController extends Controller
                 //$chatId = '-414528593';
                 $bot = new BotApi(env('TELEGRAM_TOKEN'));
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
-                
+
 
                 $media = new ArrayOfInputMedia();
                 $messageText = " #anime #art #tyan \n\n\n<a href='https://t.me/+ATd62K2jKB43YzIy'>Anime_Tyn_TG</a>";
@@ -206,7 +280,6 @@ class TelegramController extends Controller
                 }
             }
         }
-
         return back()->with('success', 'Посты опубликованы.');
     }
 }
