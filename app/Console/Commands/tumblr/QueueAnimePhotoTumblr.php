@@ -37,6 +37,9 @@ class QueueAnimePhotoTumblr extends Command
      */
     public function handle()
     {
+        $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
+
         //Сделать проверку запуска публикаций для телеграмм
         $isStart = Group::where('slug', '=', 'anime')->first();
         if (!$isStart->is_start) {
@@ -81,7 +84,12 @@ class QueueAnimePhotoTumblr extends Command
                 //$chatId = '-414528593';
                 $bot = new BotApi(env('TELEGRAM_TOKEN'));
                 //$bot->sendMessage($chatId, $messageText, 'HTML');
-
+                $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+                // Настройка CURL для использования SOCKS5 с авторизацией
+                $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+                //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+                $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
+                
                 $media = new ArrayOfInputMedia();
                 $messageText .= " #anime #art #tyan \n\n\n<a href='https://t.me/+ATd62K2jKB43YzIy'>Anime_Tyn_TG</a>";
 
@@ -92,7 +100,7 @@ class QueueAnimePhotoTumblr extends Command
                 $bot->sendMediaGroup($chatId, $media);
                 $post->is_publish = true;
                 $post->save();
-                
+
                 $isStart->increment('posts_count');
             }
         } catch (\Error $e) {

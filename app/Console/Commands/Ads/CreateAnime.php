@@ -38,6 +38,8 @@ class CreateAnime extends Command
      */
     public function handle()
     {
+        $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
         //Добавить проверку на запуск
         //Сделать проверку запуска публикаций для телеграмм
         $isStart = Group::where('slug', '=', 'sexy')->first();
@@ -45,7 +47,7 @@ class CreateAnime extends Command
             echo "Не публикуем";
             return Command::SUCCESS;
         }
-        
+
         $user = User::select('id')->where('email', 'WyomingCPA@yandex.ru')->first();
         $favorite_ids = $user->queuesPost->pluck('id')->toArray();
         $objects = Post::where('is_publish', false)->where('is_hidden', false)->whereIn('id', $favorite_ids)->orderBy('created_at', 'desc');
@@ -69,6 +71,11 @@ class CreateAnime extends Command
         $post = $objects->inRandomOrder()->first();
 
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
+        $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+        // Настройка CURL для использования SOCKS5 с авторизацией
+        $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+        //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+        $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
         // ID группы или канала, куда отправляем
         $chatId = -1002366645779;
         $ttlHours = 3; //Время жизни сообщения в часах

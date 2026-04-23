@@ -29,8 +29,8 @@ Schedule::command('app:get-post-from-telegramm-cats-video')->hourly()->runInBack
 Schedule::command('app:chech-is-file')->daily()->runInBackground()->withoutOverlapping();
 
 //advert
-Schedule::command('app:create-sexy-ads')->daily()->runInBackground()->withoutOverlapping();
-Schedule::command('app:create-anime-ads')->daily()->runInBackground()->withoutOverlapping();
+Schedule::command('app:create-sexy-ads')->everySixHours()->runInBackground()->withoutOverlapping();
+Schedule::command('app:create-anime-ads')->everySixHours()->runInBackground()->withoutOverlapping();
 Schedule::command('app:create-anime-addcit-advert')->everySixHours()->runInBackground()->withoutOverlapping();
 Schedule::command('app:create-advert-post')->everySixHours()->runInBackground()->withoutOverlapping();
 //Schedule::command('app:create-advert-tix-list-button')->daily();
