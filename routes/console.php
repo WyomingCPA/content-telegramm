@@ -41,6 +41,7 @@ Schedule::command('app:queue-sexy-video-telegramm')->everyTenMinutes()->runInBac
 Schedule::command('app:queue-anime-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-anime-addcit-photo-telegram')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-sexy-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();
+Schedule::command('app:queue-cats-video-telegramm-cats-video')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 
 Schedule::command('app:delete-ads')->hourly()->runInBackground()->withoutOverlapping();
 

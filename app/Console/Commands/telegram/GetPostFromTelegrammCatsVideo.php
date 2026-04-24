@@ -65,8 +65,8 @@ class GetPostFromTelegrammCatsVideo extends Command
                 $crawler_block = new Crawler($outerHTML);
                 try {
                     //Обработка видео
-                    $list_img[$count]['video'] = $crawler_block->filterXPath("//*[@class='media_supported_cont']/a/video")->attr('src');
-                    $list_img[$count]['href'] = $crawler_block->filterXPath("//*[@class='media_supported_cont']/a")->attr('href');
+                    $list_img[$count]['video'] = $crawler_block->filterXPath("//*[@class='tgme_widget_message_bubble']/a/video")->attr('src');
+                    $list_img[$count]['href'] = $crawler_block->filterXPath("//*[@class='tgme_widget_message_bubble']/a")->attr('href');
 
                     $raw_string_thrumhail =  $crawler_block->filterXPath("//*[@class='tgme_widget_message_video_thumb']")->attr('style');
                     $regex = "/.*\(([^)]*)\)/";
