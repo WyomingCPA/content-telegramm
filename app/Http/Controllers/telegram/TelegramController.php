@@ -32,6 +32,20 @@ class TelegramController extends Controller
             'posts' => $objects->paginate(20)
         ]);
     }
+    public function animeVideoAll(Request $request)
+    {
+        $favorite_ids = Auth::user()->queuesPost->pluck('id')->toArray();
+        $objects = Post::where('is_publish', false)->where('is_hidden', false)
+            ->where('network', 'telegramm')
+            ->where('type', 'video')
+            ->where('owner_id', 313)
+            ->whereNotIn('id', $favorite_ids)
+            ->orderBy('created_at', 'desc');
+
+        return view('telegram.cats-video', [
+            'posts' => $objects->paginate(20)
+        ]);
+    }
     public function sexyPhotoAll(Request $request)
     {
         $favorite_ids = Auth::user()->queuesPost->pluck('id')->toArray();

@@ -374,6 +374,10 @@ return [
                     'url' => 'telegram/anime-photo-all',
                 ],
                 [
+                    'text' => 'Reblog Anime Video',
+                    'url' => 'telegram/anime-video-all',
+                ],
+                [
                     'text' => 'Telegram Reblog Sexy',
                     'url' => 'telegram/sexy-photo-all',
                 ],

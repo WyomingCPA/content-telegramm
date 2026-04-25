@@ -49,6 +49,9 @@ Route::group(['prefix' => 'queue', 'middleware' => 'auth',], function () {
 
 Route::group(['prefix' => 'telegram', 'middleware' => 'auth',], function () {
     Route::get('anime-photo-all', [TelegramController::class, 'animePhotoAll']);
+    Route::get('anime-video-all', [TelegramController::class, 'animeVideoAll']);
+
+
     Route::get('sexy-photo-all', [TelegramController::class, 'sexyPhotoAll']);
     Route::get('sexy-video-all', [TelegramController::class, 'sexyVideoAll']);
     Route::get('cats-photo-all', [TelegramController::class, 'catsPhotoAll']);

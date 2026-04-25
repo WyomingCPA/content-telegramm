@@ -24,6 +24,7 @@ Schedule::command('app:get-post-from-telegramm-sexy')->hourly()->runInBackground
 Schedule::command('app:get-post-from-telegramm-sexy-video')->hourly()->runInBackground()->withoutOverlapping();
 Schedule::command('app:get-post-photo-anime')->hourly()->runInBackground()->withoutOverlapping();
 Schedule::command('app:get-post-from-telegramm-cats-video')->hourly()->runInBackground()->withoutOverlapping();
+Schedule::command('app:get-post-from-telegramm-anime-video')->hourly()->runInBackground()->withoutOverlapping();
 
 //
 Schedule::command('app:chech-is-file')->daily()->runInBackground()->withoutOverlapping();
@@ -42,6 +43,7 @@ Schedule::command('app:queue-anime-photo-telegram')->everyFifteenMinutes()->runI
 Schedule::command('app:queue-anime-addcit-photo-telegram')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-sexy-photo-telegram')->everyFifteenMinutes()->runInBackground()->withoutOverlapping();
 Schedule::command('app:queue-cats-video-telegramm-cats-video')->everyTenMinutes()->runInBackground()->withoutOverlapping();
+Schedule::command('app:queue-anime-video-telegramm')->everyTenMinutes()->runInBackground()->withoutOverlapping();
 
 Schedule::command('app:delete-ads')->hourly()->runInBackground()->withoutOverlapping();
 
