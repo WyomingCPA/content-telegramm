@@ -39,6 +39,8 @@ class CreateAdvertPost extends Command
      */
     public function handle()
     {
+        $proxy_env = env('SERVER_PROXY');
+        $proxy_password_env = env('PROXY_PASSWORD');
         $isStart = Group::where('slug', '=', 'anime')->first();
         if (!$isStart->is_start) {
             echo "Не публикуем";
@@ -59,6 +61,11 @@ class CreateAdvertPost extends Command
         $post = $objects->inRandomOrder()->first();
         $post->touch();
         $bot = new BotApi(env('TELEGRAM_TOKEN'));
+        $bot->setCurlOption(CURLOPT_TIMEOUT, 0);
+        // Настройка CURL для использования SOCKS5 с авторизацией
+        $bot->setCurlOption(CURLOPT_PROXY, $proxy_env); //'127.0.0.1:27504'
+        //$this->bot->setCurlOption(CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+        $bot->setCurlOption(CURLOPT_PROXYUSERPWD, $proxy_password_env);
         // ID группы или канала, куда отправляем
         $chatIds = [
             //-414528593,
