@@ -74,9 +74,11 @@ class CreateAdvertPost extends Command
         ];
         //$chatId = -1001771871700;
         $ttlHours = 1; //Время жизни сообщения в часах
-        $text = $post->text;
+        $caption = $post->text;
+        $button_text = $post->attachments['button_text'];
+
         $keyboard = new InlineKeyboardMarkup([
-            [['text' => $text, 'url' => $post->link]],
+            [['text' => $button_text, 'url' => $post->link]],
         ]);
         $list_img = $post->attachments;
         //echo $list_img["image"];
@@ -84,7 +86,7 @@ class CreateAdvertPost extends Command
             $tmpFile = storage_path("app/public") . "/" . $list_img["image"];
             echo $tmpFile;
 
-            $message = $bot->sendPhoto($chatId, new CURLFile($tmpFile), null, false, $keyboard);
+            $message = $bot->sendPhoto($chatId, new CURLFile($tmpFile), $caption, false, $keyboard);
             $messageId = $message->getMessageId();
 
             AdsMessage::create([
