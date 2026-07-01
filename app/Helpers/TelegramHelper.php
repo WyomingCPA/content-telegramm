@@ -120,6 +120,7 @@ class TelegramHelper
             return false;
         }
 
+        echo $tmpFile;
         $this->bot->sendPhoto($chatId, new CURLFile($tmpFile), $caption ?? '', null, null, false, $parseMode);
         unlink($tmpFile);
         return true;
